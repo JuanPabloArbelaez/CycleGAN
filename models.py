@@ -16,7 +16,7 @@ class ResidualBlock(nn.Module):
         super().__init__()
         self.conv1 = nn.Conv2d(input_channels, input_channels, kernel_size=3, padding=1, padding_mode="reflect")
         self.conv2 = nn.Conv2d(input_channels, input_channels, kernel_size=3, padding=1, padding_mode="reflect")
-        self.instance_norm = nn.InstanceNorm2d(input_channels)
+        self.instancenorm = nn.InstanceNorm2d(input_channels)
         self.activation = nn.ReLU()
 
     def forward(self, x):
@@ -45,7 +45,7 @@ class ContractingBlock(nn.Module):
     def __init__(self, input_channels, use_bn=True, kernel_size=3, activation="relu"):
         super().__init__()
         self.conv1 = nn.Conv2d(input_channels, input_channels * 2, kernel_size=kernel_size, paddong=1, stride=2, padding_mode="reflect")
-        self.activation = nn.ReLU() if activation == "reluy" else nn.LeakyReLU(0.2)
+        self.activation = nn.ReLU() if activation == "relu" else nn.LeakyReLU(0.2)
         if use_bn:
             self.instancenorm = nn.InstanceNorm2d(input_channels * 2)
         self.use_bn = use_bn
