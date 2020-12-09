@@ -8,7 +8,7 @@ def get_gen_loss(real_A, real_B, gen_AB, gen_BA, disc_A, disc_B, adv_criterion, 
     adversarial_loss = adversarial_loss_AB + adversarial_loss_BA
 
     identity_loss_AB, _= get_identity_loss(real_A, gen_BA, identity_criterion)
-    identity_loss_BA, _) = get_identity_loss(real_B, gen_AB, identity_criterion)
+    identity_loss_BA, _ = get_identity_loss(real_B, gen_AB, identity_criterion)
     identity_loss = identity_loss_AB + identity_loss_BA
 
     cycle_consistency_loss_AB, _ = get_cycle_consistency_loss(real_A, fake_B, gen_BA, cycle_criterion)
