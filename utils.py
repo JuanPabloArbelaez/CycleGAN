@@ -39,7 +39,7 @@ class ImageDataset(Dataset):
         if item_A.shape[0] != 3:
             item_A = item_A.repeat(3, 1, 1)
         if item_B.shape[0] != 3:
-            item_b = item_B.repeat(3, 1, 1)
+            item_B = item_B.repeat(3, 1, 1)
         if index == len(self) - 1:
             self.new_perm()
         # Normalization
