@@ -8,9 +8,15 @@ from skimage import color
 import numpy as np
 
 from models import *
-from losses import *https://github.com/JuanPabloArbelaez/CycleGAN/settings
+from losses import *
 from utils import *
 
+
+PRETRAINED = True
+if PRETRAINED:
+    LAST_STEP = 7800
+else:
+    LAST_STEP = 0
 
 
 # Criterions
@@ -53,9 +59,9 @@ def weights_init(m):
         torch.nn.init.normal_(m.weight, 0.0, 0.02)
         torch.nn.init.constan_(m.bias, 0)
 
-pretrained = True
-if pretrained:
-    pre_dict = torch.load('cycleGAN_100000.pth')
+
+if PRETRAINED:
+    pre_dict = torch.load(f'/content/drive/MyDrive/CycleGAN_weights/cycleGAN_{LAST_STEP}.pth')
     gen_AB.load_state_dict(pre_dict['gen_AB'])
     gen_BA.load_state_dict(pre_dict['gen_BA'])
     gen_opt.load_state_dict(pre_dict['gen_opt'])
@@ -115,7 +121,7 @@ def train(save_model=False):
             mean_generator_loss += gen_loss.item() / display_step
 
             if cur_step % display_step == 0:
-                print(f"Epoch: {epoch}  Step: {cur_step}  GenLoss {mean_generator_loss}  DiscLoss: {mean_discriminatir_loss}")
+                print(f"Epoch: {epoch}  Step: {cur_step + LAST_STEP}  GenLoss {mean_generator_loss}  DiscLoss: {mean_discriminatir_loss}")
                 show_tensor_images(torch.cat([real_A, real_B]), size=(dim_A, target_shape, target_shape))
                 show_tensor_images(torch.cat([fake_B, fake_A]), size=(dim_B, target_shape, target_shape))
                 mean_generator_loss = 0
@@ -130,7 +136,7 @@ def train(save_model=False):
                         'disc_A_opt': disc_A_opt.state_dict(),
                         'disc_B': disc_B.state_dict(),
                         'disc_B_opt': disc_B_opt.state_dict()
-                    }, f"cycleGAN_{cur_step}.pth")
+                    }, f"/content/drive/MyDrive/CycleGAN_weights/cycleGAN_{cur_step + LAST_STEP}.pth")
             cur_step += 1
 
 if __name__ == "__main__":
