@@ -8,7 +8,7 @@ from skimage import color
 import numpy as np
 
 from models import *
-from losses import *
+from losses import *https://github.com/JuanPabloArbelaez/CycleGAN/settings
 from utils import *
 
 
@@ -53,10 +53,21 @@ def weights_init(m):
         torch.nn.init.normal_(m.weight, 0.0, 0.02)
         torch.nn.init.constan_(m.bias, 0)
 
-gen_AB = gen_AB.apply(weights_init)
-gen_BA = gen_BA.apply(weights_init)
-disc_A = disc_A.apply(weights_init)
-disc_B = disc_B.apply(weights_init)
+pretrained = True
+if pretrained:
+    pre_dict = torch.load('cycleGAN_100000.pth')
+    gen_AB.load_state_dict(pre_dict['gen_AB'])
+    gen_BA.load_state_dict(pre_dict['gen_BA'])
+    gen_opt.load_state_dict(pre_dict['gen_opt'])
+    disc_A.load_state_dict(pre_dict['disc_A'])
+    disc_A_opt.load_state_dict(pre_dict['disc_A_opt'])
+    disc_B.load_state_dict(pre_dict['disc_B'])
+    disc_B_opt.load_state_dict(pre_dict['disc_B_opt'])
+else:
+    gen_AB = gen_AB.apply(weights_init)
+    gen_BA = gen_BA.apply(weights_init)
+    disc_A = disc_A.apply(weights_init)
+    disc_B = disc_B.apply(weights_init)
 
 
 # Train
