@@ -117,7 +117,7 @@ def train(save_model=False):
             if cur_step % display_step == 0:
                 print(f"Epoch: {epoch}  Step: {cur_step}  GenLoss {mean_generator_loss}  DiscLoss: {mean_discriminatir_loss}")
                 show_tensor_images(torch.cat([real_A, real_B]), size=(dim_A, target_shape, target_shape))
-                show_tensor_images(torch.cat([fake_A, fake_B]), size=(dim_B, target_shape, target_shape))
+                show_tensor_images(torch.cat([fake_B, fake_A]), size=(dim_B, target_shape, target_shape))
                 mean_generator_loss = 0
                 mean_discriminatir_loss = 0
 
