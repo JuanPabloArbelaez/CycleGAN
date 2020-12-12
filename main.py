@@ -12,9 +12,12 @@ from losses import *
 from utils import *
 
 
+
+WEIGHTS_PATHS = "/content/drive/MyDrive/CycleGAN_weights/"
+
 PRETRAINED = True
 if PRETRAINED:
-    LAST_STEP = 7800
+    LAST_STEP = get_last_training_step(WEIGHTS_PATHS)
 else:
     LAST_STEP = 0
 
@@ -61,7 +64,7 @@ def weights_init(m):
 
 
 if PRETRAINED:
-    pre_dict = torch.load(f'/content/drive/MyDrive/CycleGAN_weights/cycleGAN_{LAST_STEP}.pth')
+    pre_dict = torch.load(f"{WEIGHTS_PATHS}cycleGAN_{LAST_STEP}.pth")
     gen_AB.load_state_dict(pre_dict['gen_AB'])
     gen_BA.load_state_dict(pre_dict['gen_BA'])
     gen_opt.load_state_dict(pre_dict['gen_opt'])
@@ -136,7 +139,7 @@ def train(save_model=False):
                         'disc_A_opt': disc_A_opt.state_dict(),
                         'disc_B': disc_B.state_dict(),
                         'disc_B_opt': disc_B_opt.state_dict()
-                    }, f"/content/drive/MyDrive/CycleGAN_weights/cycleGAN_{cur_step + LAST_STEP}.pth")
+                    }, f"{WEIGHTS_PATHS}cycleGAN_{cur_step + LAST_STEP}.pth")
             cur_step += 1
 
 if __name__ == "__main__":
