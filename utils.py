@@ -1,3 +1,4 @@
+import os
 import torch
 import glob
 import random
@@ -47,3 +48,14 @@ class ImageDataset(Dataset):
     
     def __len__(self):
         return min(len(self.files_A), len(self.files_B))
+
+
+def get_last_training_step(weight_paths):
+    weights_list = os.listdir("/content/drive/MyDrive/CycleGAN_weights/")
+    max_step = 0
+    for w in weights_list:
+        step = w.split("_")[-1]
+        step = int(step.split(".")[0])
+        if step > max_step:
+            max_step = step
+    return max_step
