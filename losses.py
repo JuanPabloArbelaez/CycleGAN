@@ -9,11 +9,11 @@ def get_gen_loss(real_A, real_B, gen_AB, gen_BA, disc_A, disc_B, adv_criterion, 
 
     identity_loss_AB, _= get_identity_loss(real_A, gen_BA, identity_criterion)
     identity_loss_BA, _ = get_identity_loss(real_B, gen_AB, identity_criterion)
-    identity_loss = identity_loss_AB + identity_loss_BA
+    identity_loss = (identity_loss_AB + identity_loss_BA) * lambda_identity
 
     cycle_consistency_loss_AB, _ = get_cycle_consistency_loss(real_A, fake_B, gen_BA, cycle_criterion)
     cycle_consistency_loss_BA, _ = get_cycle_consistency_loss(real_B, fake_A, gen_AB, cycle_criterion)
-    cycle_consistency_loss = cycle_consistency_loss_AB + cycle_consistency_loss_BA
+    cycle_consistency_loss = (cycle_consistency_loss_AB + cycle_consistency_loss_BA) * lambda_cycle
 
     gen_loss = adversarial_loss + identity_loss + cycle_consistency_loss
 
