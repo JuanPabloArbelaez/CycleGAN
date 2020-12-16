@@ -18,8 +18,8 @@ WEIGHTS_PATHS = "/content/drive/MyDrive/CycleGAN_weights/"
 PRETRAINED = True
 if PRETRAINED:
     LAST_STEP = get_last_training_step(WEIGHTS_PATHS)
-else:
-    LAST_STEP = 0
+if not LAST_STEP:
+    PRETRAINED = False    
 
 
 # Criterions
