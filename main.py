@@ -11,7 +11,7 @@ from models import *
 from losses import *
 from utils import *
 
-
+torch.manual_seed(0)
 
 WEIGHTS_PATHS = "/content/drive/MyDrive/CycleGAN_weights/"
 
